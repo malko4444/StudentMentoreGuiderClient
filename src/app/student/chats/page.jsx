@@ -13,8 +13,9 @@ const Page = () => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
+        const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
         const response = await axios.get(
-          "http://localhost:4000/user/student/studentchat",
+          `${baseURL}/user/student/studentchat`,
           { withCredentials: true }
         );
         setChats(response.data.chats || []);

@@ -30,7 +30,7 @@ export default function MentorDashboard() {
     const fetchMentorData = async () => {
       try {
         setLoading(true);
-        const baseURL = process.env.NEXT_PUBLIC_API_URL;
+        const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
         // Fetch mentor profile
         const profileRes = await axios.get(`${baseURL}/user/mentor/profile`, {

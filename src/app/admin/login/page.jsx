@@ -8,6 +8,9 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3006";
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +20,7 @@ export default function AdminLogin() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/admin/login",
+        `${API_BASE}/admin/login`,
         { email, password },
         { withCredentials: true }
       );
