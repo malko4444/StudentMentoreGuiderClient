@@ -15,8 +15,6 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3006";
-
 export default function LandingPage() {
   const registerRef = useRef<HTMLElement>(null);
 
@@ -475,7 +473,7 @@ export default function LandingPage() {
 
                 <button
                   onClick={() =>
-                    (window.location.href = `${baseURL}/mentor/signup`)
+                    (window.location.href = "http://localhost:3006/mentor/signup")
                   }
                   className="w-full group/btn inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-blue-500 hover:bg-blue-400 transition-colors font-semibold text-white"
                 >
@@ -534,7 +532,7 @@ export default function LandingPage() {
 
                 <button
                   onClick={() =>
-                    (window.location.href = `${baseURL}/student/signup`)
+                    (window.location.href = "http://localhost:3006/student/signup")
                   }
                   className="w-full group/btn inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-gray-100 transition-colors font-semibold text-black"
                 >

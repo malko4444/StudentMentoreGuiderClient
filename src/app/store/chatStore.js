@@ -70,15 +70,12 @@ export const useChatStore = create((set, get) => ({
 
       if (isRelevantMessage) {
         const currentMessages = get().messages;
-        console.log("in the messaeg updation", isRelevantMessage, currentMessages);
-
-        // 1️⃣ Update messages in store (dedupe by _id if present)
-        set((state) => {
-          if (message._id && state.messages.some((m) => m._id === message._id)) {
-            return { messages: state.messages };
-          }
-          return { messages: [...state.messages, message] };
-        });
+        console.log("in the messaeg updation", isRelevantMessage,currentMessages);
+        
+        
+        // 1️⃣ Update messages in store
+        set((state) => ({ messages: [...state.messages, message] }));
+        log
       }
       console.log("📩 Received:fgdfgdfgdg", message);
 

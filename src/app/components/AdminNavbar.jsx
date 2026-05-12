@@ -44,9 +44,8 @@ export default function AdminNavbar() {
 
   const handleLogout = async () => {
     try {
-      const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
       await axios.post(
-        `${baseURL}/user/admin/logout`,
+        `${process.env.NEXT_PUBLIC_API_URL}/user/admin/logout`,
         {},
         { withCredentials: true }
       );

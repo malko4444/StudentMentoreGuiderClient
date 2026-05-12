@@ -51,9 +51,8 @@ export default function StudentNavbar() {
 
   const handleLogout = async () => {
     try {
-      const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
       await axios.post(
-        `${baseURL}/user/student/logout`,
+        `${process.env.NEXT_PUBLIC_API_URL}/user/student/logout`,
         {},
         { withCredentials: true }
       );

@@ -12,9 +12,8 @@ export default function MentorNavbar() {
 
   const handleLogout = async () => {
     try {
-      const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
       await axios.post(
-        `${baseURL}/user/mentor/logout`,
+        `${process.env.NEXT_PUBLIC_API_URL}/user/mentor/logout`,
         {},
         { withCredentials: true }
       );

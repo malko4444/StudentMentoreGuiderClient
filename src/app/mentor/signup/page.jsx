@@ -21,7 +21,7 @@ function Page() {
   const [responseData, setResponseData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+  const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
