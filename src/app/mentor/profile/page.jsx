@@ -29,7 +29,10 @@ function Profile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`${baseURL}/user/mentor/profile`);
+        // use with credential true to send cookies for authentication
+        const response = await axios.get(`${baseURL}/user/mentor/profile`, {
+          withCredentials: true,
+        });
         setMentor(response.data.mentor);
       } catch (error) {
         console.error("Error fetching mentor profile:", error);
