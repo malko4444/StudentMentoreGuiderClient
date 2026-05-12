@@ -537,7 +537,7 @@ export default function LandingPage() {
                   }
                   className="w-full group/btn inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-gray-100 transition-colors font-semibold text-black"
                 >
-                  Register as Student
+                  Register as a Student
                   <ArrowRight
                     size={16}
                     className="group-hover/btn:translate-x-1 transition-transform"
