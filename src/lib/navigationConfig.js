@@ -1,6 +1,6 @@
 const rawFrontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.trim() || "";
 
-export const FRONTEND_BASE = rawFrontendUrl.replace(/\/+$|^\s+|\s+$/g, "") || "http://localhost:3006";
+export const FRONTEND_BASE = rawFrontendUrl.replace(/\/+$|^\s+|\s+$/g, "") || "https://student-mentore-guider-client.vercel.app";
 
 export const NAVIGATION_URLS = {
   MENTOR_SIGNUP: `${FRONTEND_BASE}/mentor/signup`,
