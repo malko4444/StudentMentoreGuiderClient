@@ -14,6 +14,7 @@ import {
   Sparkles,
   CheckCircle2,
 } from "lucide-react";
+import { NAVIGATION_URLS } from "@/lib/navigationConfig";
 
 export default function LandingPage() {
   const registerRef = useRef<HTMLElement>(null);
@@ -473,7 +474,7 @@ export default function LandingPage() {
 
                 <button
                   onClick={() =>
-                    (window.location.href = "http://localhost:3006/mentor/signup")
+                    (window.location.href = NAVIGATION_URLS.MENTOR_SIGNUP)
                   }
                   className="w-full group/btn inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-blue-500 hover:bg-blue-400 transition-colors font-semibold text-white"
                 >
@@ -532,7 +533,7 @@ export default function LandingPage() {
 
                 <button
                   onClick={() =>
-                    (window.location.href = "http://localhost:3006/student/signup")
+                    (window.location.href = NAVIGATION_URLS.STUDENT_SIGNUP)
                   }
                   className="w-full group/btn inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-gray-100 transition-colors font-semibold text-black"
                 >
