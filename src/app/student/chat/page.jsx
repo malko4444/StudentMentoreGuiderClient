@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { motion } from "framer-motion";
@@ -8,19 +9,18 @@ import StudentNavbar from "../../components/StudentNavbar";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3006";
 
-export default function ChatPage() {
+function ChatContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  
+
   const mentorId = searchParams.get("mentorId");
   const mentorName = searchParams.get("mentorName");
-  
+
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(true);
 
-  // Fetch previous chat history
   useEffect(() => {
     if (!mentorId) {
       router.push("/student/courses");
@@ -48,30 +48,28 @@ export default function ChatPage() {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
+
     if (!newMessage.trim()) return;
 
     setLoading(true);
+
     const userMessage = {
       sender: "student",
       message: newMessage,
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
     };
 
-    // Optimistically add message to UI
     setMessages((prev) => [...prev, userMessage]);
     setNewMessage("");
 
     try {
-      // Here you would send the message to your backend
-      // Example: await axios.post(`${API_BASE}/student/sendMessage`, {...}, { withCredentials: true });
-      // For now, just add a simulated mentor response
-      
       setTimeout(() => {
         const mentorReply = {
           sender: "mentor",
           message: "Thanks for your message! I'll get back to you soon.",
-          timestamp: new Date(),
+          timestamp: new Date().toISOString(),
         };
+
         setMessages((prev) => [...prev, mentorReply]);
       }, 1000);
     } catch (err) {
@@ -84,9 +82,8 @@ export default function ChatPage() {
   return (
     <div className="min-h-screen w-full flex flex-col">
       <StudentNavbar />
-      
+
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Chat Header */}
         <div className="bg-[#0c0c0c]/95 border-b border-white/10 px-6 py-4 flex items-center gap-4">
           <button
             onClick={() => router.back()}
@@ -94,10 +91,12 @@ export default function ChatPage() {
           >
             <ArrowLeft size={20} />
           </button>
+
           <div className="flex items-center gap-3 flex-1">
             <div className="p-2 rounded-full bg-blue-500/20 border border-blue-500/40">
               <MessageCircle size={20} className="text-blue-400" />
             </div>
+
             <div>
               <h2 className="text-lg font-semibold text-gradient-white">
                 {mentorName || "Mentor"}
@@ -107,7 +106,6 @@ export default function ChatPage() {
           </div>
         </div>
 
-        {/* Messages Area */}
         <div className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-4 bg-black/50">
           {loadingChat ? (
             <div className="flex items-center justify-center h-full">
@@ -120,39 +118,52 @@ export default function ChatPage() {
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
                 <MessageCircle size={48} className="text-blue-400 opacity-30 mx-auto mb-3" />
-                <p className="text-gray-400">No messages yet. Start the conversation!</p>
+                <p className="text-gray-400">
+                  No messages yet. Start the conversation!
+                </p>
               </div>
             </div>
           ) : (
-            messages.map((msg, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`flex ${msg.sender === "student" ? "justify-end" : "justify-start"}`}
-              >
-                <div
-                  className={`max-w-xs px-4 py-2.5 rounded-2xl ${
-                    msg.sender === "student"
-                      ? "bg-blue-600 text-white rounded-br-none"
-                      : "bg-white/10 text-gray-200 rounded-bl-none border border-white/20"
+            messages.map((msg, idx) => {
+              const isStudent = msg.sender === "student";
+              const messageText = msg.message || msg.text || "";
+              const messageTime = msg.timestamp || msg.createdAt || new Date();
+
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`flex ${
+                    isStudent ? "justify-end" : "justify-start"
                   }`}
                 >
-                  <p className="text-sm">{msg.message}</p>
-                  <p className={`text-xs mt-1 ${msg.sender === "student" ? "text-blue-100" : "text-gray-400"}`}>
-                    {new Date(msg.timestamp).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                </div>
-              </motion.div>
-            ))
+                  <div
+                    className={`max-w-xs px-4 py-2.5 rounded-2xl ${
+                      isStudent
+                        ? "bg-blue-600 text-white rounded-br-none"
+                        : "bg-white/10 text-gray-200 rounded-bl-none border border-white/20"
+                    }`}
+                  >
+                    <p className="text-sm">{messageText}</p>
+                    <p
+                      className={`text-xs mt-1 ${
+                        isStudent ? "text-blue-100" : "text-gray-400"
+                      }`}
+                    >
+                      {new Date(messageTime).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })
           )}
         </div>
 
-        {/* Input Area */}
         <div className="bg-[#0c0c0c]/95 border-t border-white/10 px-6 py-4">
           <form onSubmit={handleSendMessage} className="flex gap-3">
             <input
@@ -163,6 +174,7 @@ export default function ChatPage() {
               disabled={loading}
               className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-blue-500/50 disabled:opacity-50 transition-colors"
             />
+
             <motion.button
               type="submit"
               disabled={loading || !newMessage.trim()}
@@ -180,5 +192,19 @@ export default function ChatPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ChatPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-black text-white">
+          Loading chat...
+        </div>
+      }
+    >
+      <ChatContent />
+    </Suspense>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
+import { API_BASE } from "@/lib/apiConfig";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ export default function AdminLogin() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/admin/login",
+        `${API_BASE}/admin/login`,
         { email, password },
         { withCredentials: true }
       );

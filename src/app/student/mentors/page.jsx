@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useStudentAuth } from "../../store/studentAuth"
+import { API_BASE } from "@/lib/apiConfig";
 import StudentNavbar from "../../components/StudentNavbar";
 import { Github, Linkedin, Briefcase, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -70,7 +71,7 @@ export default function StudentMentorsPage() {
                                                 src={
                                                     mentor.profilePicture.url.startsWith("http")
                                                         ? mentor.profilePicture.url
-                                                        : `http://localhost:4000${mentor.profilePicture.url}`
+                                                        : `${API_BASE}${mentor.profilePicture.url}`
                                                 }
                                                 alt={mentor.name}
                                                 className="w-full h-full object-cover"

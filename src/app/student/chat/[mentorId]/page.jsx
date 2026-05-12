@@ -34,6 +34,7 @@ export default function ChatPage() {
   useEffect(() => {
     if (studentId && !socket) {
       console.log("the chaanet ");
+      console.log("Rendering student/chat/[mentorId]/page.jsx");
 
       connectSocket(studentId);
     }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { API_BASE } from "@/lib/apiConfig";
 import StudentNavbar from "../../components/StudentNavbar";
 
 const Page = () => {
@@ -14,7 +15,7 @@ const Page = () => {
     const fetchChats = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/user/student/studentchat",
+          `${API_BASE}/user/student/studentchat`,
           { withCredentials: true }
         );
         setChats(response.data.chats || []);
